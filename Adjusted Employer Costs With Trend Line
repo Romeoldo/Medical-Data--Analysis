@@ -1,0 +1,39 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# Datos para los costos ajustados del empleador para escoliosis
+categories = np.array(['Actual Cost', 'Employer Cost', 'Adjusted Employer Cost', 'Medicare Underpayment'])
+costs = np.array([50000, 352900, 300000, 250000])
+
+# Convertimos las categorías a valores numéricos para la regresión
+x = np.arange(len(categories)).reshape(-1, 1)
+y = costs
+
+# Ajustamos el modelo de regresión lineal
+model = LinearRegression()
+model.fit(x, y)
+trend = model.predict(x)
+
+# Crear gráfico con línea de tendencia
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Graficar los costos
+ax.bar(categories, costs, label='Costs')
+
+# Graficar la línea de tendencia
+ax.plot(categories, trend, color='red', linestyle='--', label='Trend Line')
+
+# Configurar etiquetas y título
+ax.set_ylabel('Cost ($)')
+ax.set_title('Adjusted Employer Costs with Trend Line')
+ax.legend()
+
+# Mostrar gráfico
+plt.show()
+
+# Coeficiente de la línea de tendencia
+slope = model.coef_[0]
+intercept = model.intercept_
+
+slope, intercept
