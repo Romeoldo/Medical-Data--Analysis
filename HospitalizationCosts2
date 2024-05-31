@@ -1,0 +1,35 @@
+import matplotlib.pyplot as plt
+
+# Datos
+cost_categories = ['Hospitalization', 'Scoliosis', 'Admin']
+actual_costs = [100000, 50000, 0]
+employer_costs = [0, 352900, 0]
+medicare_reimbursement = [50000, 0, 0]
+total_costs_5_patients = [250000, 0, 0]
+adjusted_employer_costs = [0, 300000, 0]
+medicare_underpayment = [250000, 250000, 0]
+admin_costs = [0, 0, 52900]
+
+# Crear gráfico de barras
+fig, ax = plt.subplots(figsize=(12, 6))
+width = 0.12  # Ancho de las barras
+x = range(len(cost_categories))
+
+# Graficar cada conjunto de datos
+ax.bar(x, actual_costs, width, label='Actual Cost')
+ax.bar([p + width for p in x], employer_costs, width, label='Employer Cost')
+ax.bar([p + width * 2 for p in x], medicare_reimbursement, width, label='Medicare Reimbursement')
+ax.bar([p + width * 3 for p in x], total_costs_5_patients, width, label='Total Cost for 5 Patients')
+ax.bar([p + width * 4 for p in x], adjusted_employer_costs, width, label='Adjusted Employer Cost')
+ax.bar([p + width * 5 for p in x], medicare_underpayment, width, label='Medicare Underpayment')
+ax.bar([p + width * 6 for p in x], admin_costs, width, label='Admin Cost')
+
+# Configurar etiquetas y título
+ax.set_ylabel('Cost ($)')
+ax.set_title('Healthcare Cost Analysis')
+ax.set_xticks([p + 3 * width for p in x])
+ax.set_xticklabels(cost_categories)
+ax.legend()
+
+# Mostrar gráfico
+plt.show()
