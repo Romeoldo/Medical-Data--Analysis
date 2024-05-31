@@ -72,3 +72,55 @@ ax.set_xticklabels(categories)
 ax.legend()
 
 plt.show()
+```
+### Chart 2: Bar Chart of Adjusted Employer Costs for Scoliosis with Trend Line
+
+This chart shows the costs related to scoliosis, along with a trend line indicating the relationship between different cost categories.
+
+```python
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+# Scoliosis data
+categories_scoliosis = np.array(['Actual Cost', 'Employer Cost', 'Adjusted Employer Cost', 'Medicare Underpayment'])
+costs_scoliosis = np.array([50000, 352900, 300000, 250000])
+
+# Convert categories to numeric values for regression
+x = np.arange(len(categories_scoliosis)).reshape(-1, 1)
+y = costs_scoliosis
+
+# Fit linear regression model
+model = LinearRegression()
+model.fit(x, y)
+trend = model.predict(x)
+
+# Create bar chart with trend line
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.bar(categories_scoliosis, costs_scoliosis, label='Costs')
+ax.plot(categories_scoliosis, trend, color='red', linestyle='--', label='Trend Line')
+ax.set_ylabel('Cost ($)')
+ax.set_title('Adjusted Employer Costs with Trend Line')
+ax.legend()
+
+plt.show()
+```
+### Chart 3: Bar Chart of Cross-Subsidization Costs
+
+This chart shows the cross-subsidization costs, including the cost per Rick and the Medicare underpayment.
+```python
+# Cross-subsidization data
+cross_subsidization_categories = ['Rick Cost', 'Medicare Underpayment']
+cross_subsidization_costs = [52000, 250000]
+
+# Create bar chart of cross-subsidization costs
+fig, ax = plt.subplots(figsize=(8, 6))
+ax.bar(cross_subsidization_categories, cross_subsidization_costs, color=['blue', 'green'])
+ax.set_ylabel('Cost ($)')
+ax.set_title('Cross-Subsidization Costs')
+ax.legend(['Costs'])
+
+plt.show()
+```
+
+### Conclusion
+These charts provide a clear and structured visualization of the data presented on the whiteboard, helping to understand the financial dynamics hospitals face in terms of costs and reimbursements. By analyzing these charts, we can gain valuable insights into the challenges and financial pressures within the healthcare industry.
