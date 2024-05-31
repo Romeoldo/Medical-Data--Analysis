@@ -1,0 +1,72 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+# Datos de Hospitalización y Escoliosis
+categories_hospitalization = ['Actual Cost', 'Employer Cost', 'Adjusted Employer Cost', 'Medicare Underpayment']
+costs_hospitalization = [100000, 0, 0, 250000]
+categories_scoliosis = ['Actual Cost', 'Employer Cost', 'Adjusted Employer Cost', 'Medicare Underpayment']
+costs_scoliosis = [50000, 352900, 300000, 250000]
+
+# Datos para los gráficos
+categories = ['Hospitalization', 'Scoliosis']
+actual_costs = [100000, 50000]
+employer_costs = [0, 352900]
+medicare_reimbursement = [50000, 0]
+total_costs_5_patients = [250000, 0]
+adjusted_employer_costs = [0, 300000]
+medicare_underpayment = [250000, 250000]
+admin_costs = [0, 0, 52900]
+
+# Crear gráfico de barras de costos de hospitalización y escoliosis
+fig, ax = plt.subplots(figsize=(12, 6))
+width = 0.12  # Ancho de las barras
+x = range(len(categories))
+
+# Graficar cada conjunto de datos
+ax.bar(x, actual_costs, width, label='Actual Cost')
+ax.bar([p + width for p in x], employer_costs, width, label='Employer Cost')
+ax.bar([p + width * 2 for p in x], medicare_reimbursement, width, label='Medicare Reimbursement')
+ax.bar([p + width * 3 for p in x], total_costs_5_patients, width, label='Total Cost for 5 Patients')
+ax.bar([p + width * 4 for p in x], adjusted_employer_costs, width, label='Adjusted Employer Cost')
+ax.bar([p + width * 5 for p in x], medicare_underpayment, width, label='Medicare Underpayment')
+
+# Configurar etiquetas y título
+ax.set_ylabel('Cost ($)')
+ax.set_title('Healthcare Cost Analysis')
+ax.set_xticks([p + 2 * width for p in x])
+ax.set_xticklabels(categories)
+ax.legend()
+
+plt.show()
+
+# Gráfico de costos ajustados del empleador para escoliosis con línea de tendencia
+categories_scoliosis_numeric = np.arange(len(categories_scoliosis)).reshape(-1, 1)
+costs_scoliosis_array = np.array(costs_scoliosis)
+
+# Ajustar modelo de regresión lineal
+model = LinearRegression()
+model.fit(categories_scoliosis_numeric, costs_scoliosis_array)
+trend = model.predict(categories_scoliosis_numeric)
+
+# Crear gráfico con línea de tendencia
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.bar(categories_scoliosis, costs_scoliosis, label='Costs')
+ax.plot(categories_scoliosis, trend, color='red', linestyle='--', label='Trend Line')
+ax.set_ylabel('Cost ($)')
+ax.set_title('Adjusted Employer Costs with Trend Line')
+ax.legend()
+
+plt.show()
+
+# Gráfico de barras de costos de subsidización cruzada
+cross_subsidization_categories = ['Rick Cost', 'Medicare Underpayment']
+cross_subsidization_costs = [52000, 250000]
+
+fig, ax = plt.subplots(figsize=(8, 6))
+ax.bar(cross_subsidization_categories, cross_subsidization_costs, color=['blue', 'green'])
+ax.set_ylabel('Cost ($)')
+ax.set_title('Cross-Subsidization Costs')
+ax.legend(['Costs'])
+
+plt.show()
